@@ -5,12 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday 🎂</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* General reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
+      overflow-x: hidden;
+    }
+
+    h1, h2 {
+      color: #ff4081;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      background: #ff4081;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e91e63;
+      transform: scale(1.05);
+    }
+
+    section { 
+      display: none; 
+      min-height: 100vh; 
+      padding: 40px; 
+      position: relative;
+      z-index: 1; /* Keep above hearts */
+    }
+
+    section.active { 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+    }
+
+    /* Gallery styling */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Flying hearts background */
+    .heart {
+      position: fixed;
+      bottom: -50px;
+      font-size: 24px;
+      color: red;
+      animation: floatUp 6s linear infinite;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Flying hearts container -->
+  <div id="hearts"></div>
+
   <!-- Countdown Section -->
   <section id="countdownSection" class="active">
     <h1>⏳ Countdown to Surprise ⏳</h1>
-    <div id="countdown">10</div>
+    <div id="countdown" style="font-size: 50px; font-weight: bold; margin-top: 20px;">10</div>
   </section>
 
   <!-- Greeting Section -->
@@ -46,9 +143,57 @@
       <img src="images/photo9.jpg" alt="Memory 9">
       <img src="images/photo10.jpg" alt="Memory 10">
     </div>
-    <p>💖 More memories to come... 💖</p>
+    <p style="margin-top:20px;">💖 More memories to come... 💖</p>
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    // Sections order
+    const sections = [
+      "countdownSection",
+      "greetingSection",
+      "messageSection",
+      "gallerySection"
+    ];
+    let currentIndex = 0;
+
+    function showSection(index) {
+      sections.forEach((id, i) => {
+        document.getElementById(id).classList.toggle("active", i === index);
+      });
+    }
+
+    function nextSection() {
+      currentIndex++;
+      if (currentIndex < sections.length) {
+        showSection(currentIndex);
+      }
+    }
+
+    // Countdown logic (10 → 0 then move to greeting)
+    let countdown = 10;
+    const countdownElement = document.getElementById("countdown");
+    const countdownTimer = setInterval(() => {
+      countdownElement.innerText = countdown;
+      countdown--;
+      if (countdown < 0) {
+        clearInterval(countdownTimer);
+        nextSection(); // show greeting
+      }
+    }, 1000);
+
+    // Flying hearts background
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.getElementById("hearts").appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+
+    setInterval(createHeart, 500);
+  </script>
 </body>
 </html>
