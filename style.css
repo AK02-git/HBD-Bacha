@@ -1,48 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday 🎂</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Countdown Section -->
-  <section id="countdownSection" class="active">
-    <h1>⏳ Countdown to Surprise ⏳</h1>
-    <div id="countdown">10</div>
-  </section>
+/* General layout */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #ffdde1, #ee9ca7);
+  color: #333;
+  text-align: center;
+}
 
-  <!-- Greeting Section -->
-  <section id="greetingSection">
-    <h1>🎂 Happy Birthday My Love 🎂</h1>
-    <p>Wishing you endless happiness, smiles, and love today and always 💖</p>
-    <button onclick="nextSection()">Next ➡️</button>
-  </section>
+/* Section styling */
+section {
+  display: none;
+  min-height: 100vh;
+  padding: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+section.active {
+  display: flex;
+  animation: fadeIn 1s ease-in-out;
+}
 
-  <!-- Message Section -->
-  <section id="messageSection">
-    <h2>💌 A Little Note</h2>
-    <p>
-      You are the most special person in my life.  
-      On your birthday, I just want to remind you how much you mean to me 💕.  
-      Every moment with you is a blessing ✨.
-    </p>
-    <button onclick="nextSection()">See Memories 📸</button>
-  </section>
+/* Headings */
+h1, h2 {
+  margin-bottom: 20px;
+  color: #d63384;
+}
 
-  <!-- Gallery Section -->
-  <section id="gallerySection">
-    <h2>📸 Our Beautiful Memories</h2>
-    <div class="gallery">
-      <img src="photo1.jpg" alt="Memory 1">
-      <img src="photo2.jpg" alt="Memory 2">
-      <img src="photo3.jpg" alt="Memory 3">
-      <img src="photo4.jpg" alt="Memory 4">
-    </div>
-    <p>💖 More memories to come... 💖</p>
-  </section>
+/* Buttons */
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #ff4b5c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #ff1e40;
+  transform: scale(1.05);
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+/* Countdown */
+#countdown {
+  font-size: 60px;
+  font-weight: bold;
+  color: #ff1e56;
+  margin-top: 20px;
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+  width: 90%;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
